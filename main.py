@@ -33,6 +33,7 @@ def findchronopost(lat,lng,cp,commune):
   response = requests.get('https://www.chronopost.fr/expeditionAvanceeSec/stubpointsearch.json', headers=headers, params=params)
   data = response.json()
   relais=pd.DataFrame(r for r in data['olgiPointList'])
+  relais=relais[relais.presentationPointType=='P']
   for c in relais.select_dtypes(include=object).columns:
     relais[c]=relais[c].astype(str)
   return relais
